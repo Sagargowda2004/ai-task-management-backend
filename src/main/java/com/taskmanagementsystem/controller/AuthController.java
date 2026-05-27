@@ -1,6 +1,7 @@
 package com.taskmanagementsystem.controller;
 
 import com.taskmanagementsystem.dto.RegisterRequest;
+import com.taskmanagementsystem.dto.ResetPasswordRequest;
 import com.taskmanagementsystem.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,13 @@ public class AuthController {
     ) {
 
         return authService.login(request);
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(
+            @RequestBody ResetPasswordRequest request
+    ) {
+
+        return authService.resetPassword(request);
     }
 }

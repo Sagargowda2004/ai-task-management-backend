@@ -2,6 +2,7 @@ package com.taskmanagementsystem.service.impl;
 
 import com.taskmanagementsystem.dto.LoginRequest;
 import com.taskmanagementsystem.dto.RegisterRequest;
+import com.taskmanagementsystem.dto.ResetPasswordRequest;
 import com.taskmanagementsystem.entity.User;
 import com.taskmanagementsystem.repository.UserRepository;
 import com.taskmanagementsystem.service.AuthService;
@@ -80,5 +81,33 @@ public class AuthServiceImpl implements AuthService {
                 "token",
                 token
         );
+    }
+
+    @Override
+    public String resetPassword(
+            ResetPasswordRequest request
+    ) {
+
+        Optional<User> optionalUser =
+                userRepository.findByEmail(
+                        request.getEmail()
+                );
+
+        if(optionalUser.isEmpty()) {
+
+            return "User not found";
+        }
+
+        User user = optionalUser.get();
+
+        user.setPassword(
+                passwordEncoder.encode(
+                        request.getNewPassword()
+                )
+        );
+
+        userRepository.save(user);
+
+        return "Password reset successful";
     }
 }
