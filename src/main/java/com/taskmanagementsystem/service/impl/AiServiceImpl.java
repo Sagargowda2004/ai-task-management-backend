@@ -205,6 +205,11 @@ public class AiServiceImpl implements AiService {
                   "I don't have access to your tasks"
                 - Do NOT ask user to provide tasks again
                 - Always use the available task context intelligently
+                - Avoid unnecessary blank lines
+                - Keep bullet points compact
+                - Use tight spacing between sections
+                - Prefer short grouped responses
+                - Avoid markdown headers unless necessary
                 
                 Current User Tasks:
                 
