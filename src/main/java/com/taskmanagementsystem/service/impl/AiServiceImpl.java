@@ -52,21 +52,6 @@ public class AiServiceImpl implements AiService {
         List<Task> tasks =
                 taskRepository.findByUser(user);
 
-        if (tasks.isEmpty()) {
-
-            return """
-                    Welcome to TaskFlow AI 🚀
-                    You currently don't have any tasks in your workspace.
-                    
-                    Here are a few suggestions to get started:
-                    
-                    • Add your most important task first
-                    • Set priorities and deadlines
-                    • Break large goals into smaller tasks
-                    • Track progress daily for better productivity
-                    """;
-        }
-
         // BUILD TASK CONTEXT
         StringBuilder taskSummary =
                 new StringBuilder();
@@ -148,6 +133,16 @@ public class AiServiceImpl implements AiService {
                 - If user asks vague questions:
                   → guide them with structured next steps
                 
+                - If user asks how to create a task:
+                  → explain briefly and provide a practical example
+                
+                - If user provides only a topic:
+                  → generate:
+                    - task title
+                    - short description
+                    - suggested priority
+                    - suggested deadline
+                
                 TASK ANALYSIS BEHAVIOR:
                 
                 - Analyze user tasks intelligently
@@ -156,6 +151,21 @@ public class AiServiceImpl implements AiService {
                 - Recommend priorities
                 - Suggest productivity improvements
                 - Highlight overdue risks
+                
+                EMPTY TASK LIST BEHAVIOR:
+                
+                - If the user has no tasks and asks about:
+                  - current tasks
+                  - task status
+                  - productivity insights
+                  - pending work
+                
+                  → politely explain that no tasks exist yet
+                  → encourage the user to create tasks
+                  → suggest a few useful starter tasks
+                
+                - Do NOT repeatedly mention empty task lists
+                  for unrelated questions
                 
                 IMPORTANT RULES:
                 
