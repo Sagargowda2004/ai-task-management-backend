@@ -52,6 +52,21 @@ public class AiServiceImpl implements AiService {
         List<Task> tasks =
                 taskRepository.findByUser(user);
 
+        if (tasks.isEmpty()) {
+
+            return """
+                    Welcome to TaskFlow AI 🚀
+                    You currently don't have any tasks in your workspace.
+                    
+                    Here are a few suggestions to get started:
+                    
+                    • Add your most important task first
+                    • Set priorities and deadlines
+                    • Break large goals into smaller tasks
+                    • Track progress daily for better productivity
+                    """;
+        }
+
         // BUILD TASK CONTEXT
         StringBuilder taskSummary =
                 new StringBuilder();
