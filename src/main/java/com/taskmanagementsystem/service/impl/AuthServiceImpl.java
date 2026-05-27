@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.taskmanagementsystem.service.JwtService;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -40,24 +41,44 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginRequest request) {
+    public Map<String, String> login(
+            LoginRequest request
+    ) {
 
         Optional<User> optionalUser =
-                userRepository.findByEmail(request.getEmail());
+                userRepository.findByEmail(
+                        request.getEmail()
+                );
 
-        if(optionalUser.isEmpty()) {
-            return "User not found";
+        if (optionalUser.isEmpty()) {
+
+            return Map.of(
+                    "error",
+                    "User not found"
+            );
         }
 
         User user = optionalUser.get();
 
-        if(!passwordEncoder.matches(
+        if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword()
         )) {
-            return "Invalid Password";
+
+            return Map.of(
+                    "error",
+                    "Invalid Password"
+            );
         }
 
-        return jwtService.generateToken(user.getEmail());
+        String token =
+                jwtService.generateToken(
+                        user.getEmail()
+                );
+
+        return Map.of(
+                "token",
+                token
+        );
     }
 }
