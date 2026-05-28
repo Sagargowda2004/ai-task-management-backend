@@ -190,22 +190,6 @@ npm run dev
 
 ---
 
-# Screenshots
-
-## Login Page
-(Add Screenshot)
-
-## Dashboard
-(Add Screenshot)
-
-## AI Assistant
-(Add Screenshot)
-
-## Task Management
-(Add Screenshot)
-
----
-
 # Challenges Faced
 - JWT authentication integration
 - AI prompt engineering
